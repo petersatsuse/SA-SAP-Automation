@@ -12,11 +12,11 @@ Application workloads will consider the components, these will include, but not 
 
 === SUSE Linux Enterprise Server for SAP Applications
 
-SUSE Linux Enterprise Server for SAP Applications is a product formed from a bundle of software and services.  It is targeted specifically at customers running SAP workloads.  At its foundation is SUSE Linux Enterprise Server and the High Availability Extension with many additional components and benefits for running SAP Applications.
+SUSE Linux Enterprise Server for SAP Applications is a product formed from a bundle of software and services. It is targeted specifically at customers running SAP workloads. At its foundation is SUSE Linux Enterprise Server and the High Availability Extension with many additional components and benefits for running SAP Applications.
 
 === SAP Application
 
-In order to use the automation project, there are preliminary steps which need to be taken.  One of these is to prepare the SAP installation software.  The SAP software can be downloaded from https://launchpad.support.sap.com/#/softwarecenter.  This will need to be performed manually before starting the automated deployment.
+In order to use the automation project, there are preliminary steps which need to be taken. One of these is to prepare the SAP installation software. The SAP software can be downloaded from https://launchpad.support.sap.com/#/softwarecenter. This will need to be performed manually before starting the automated deployment.
 
 === Presenting the SAP Media
 
@@ -34,20 +34,20 @@ endif::[]
 
 ifeval::[ "{cloud}" == "AWS" ]
 
-When deploying on AWS, an S3 Bucket is required to store the SAP media.  Using the AWS Console:
+When deploying on AWS, an S3 Bucket is required to store the SAP media. Using the AWS Console:
 
 * Create an S3 bucket.
 * Create a folder within the bucket.
 * Upload the SAP media to the folder within the S3 bucket.
 
-TIP:  The example shows a bucket called _mysapmedia_, but a unique name should be used.
+TIP: The example shows a bucket called _mysapmedia_, but a unique name should be used.
 
 image::s3_bucket.png[scalewidth=80%]
 
 endif::[]
 
 ifeval::[ "{cloud}" == "GCP" ]
-When deploying on GCP, a Storage Bucket is required to store the SAP Media.  Using the GCP Console:
+When deploying on GCP, a Storage Bucket is required to store the SAP Media. Using the GCP Console:
 
 * Create a storage bucket.
 * Create two folders (for the SAP HANA and SAP NetWeaver media) within the bucket.
@@ -73,13 +73,13 @@ As an infrastructure provisioning tool, it is responsible for creating the serve
 
 Terraform is seen as cloud-agnostic and allows a single configuration to be used to manage multiple providers. This simplifies management and orchestration, helping operators build large-scale multi-cloud infrastructures.
 
-It is important to note that Terraform can not simply create a landscape in another cloud with the press of a button. The cloud providers use different types of infrastructure.  For example the VMs, load balancers, and other services offered by AWS are very different to those in Azure and {gcloud}.
+It is important to note that Terraform can not simply create a landscape in another cloud with the press of a button. The cloud providers use different types of infrastructure. For example the VMs, load balancers, and other services offered by AWS are very different to those in Azure and {gcloud}.
 
-Terraform’s approach is that code is written specific to a (cloud) provider and will take advantage of the provider’s unique functionality.  While the code needs to be modified when used on a different cloud provider, being able to use the same language and toolset for all providers makes this effortless.
+The approach from Terraform is that code is written specific to a (cloud) provider and will take advantage of the provider’s unique functionality. While the code needs to be modified when used on a different cloud provider, being able to use the same language and toolset for all providers makes this effortless.
 
 The name Terraform uses for these cloud specific modules is "provider." So, for example, the _Azure Provider_ can be used to configure infrastructure in Microsoft Azure using the Azure Resource Manager API's.
 
-Configuration files describe to Terraform which components need to deploy in order to support the application.  One of the first steps is to run the `terraform` command, this will generate an execution plan that describes the actions Terraform will perform to get to the planned desired state.  The plan is in the form of a list of cloud infrastructure to create, delete, and modify.  If this looks correct, the final step is to execute the plan to create the described infrastructure.
+Configuration files describe to Terraform which components need to deploy in order to support the application. One of the first steps is to run the `terraform` command, this will generate an execution plan that describes the actions Terraform will perform to get to the planned desired state. The plan is in the form of a list of cloud infrastructure to create, delete, and modify. If this looks correct, the final step is to execute the plan to create the described infrastructure.
 
 SUSE provides Terraform configuration files for AWS, Azure, {gcloud} and libvirt.
 
@@ -113,7 +113,7 @@ As {cloud} provides different types of storage suitable for supporting SAP workl
 
 The suggestions from SUSE's Terraform files for the storage configurations are meant as a good starting point.
 
-You should still analyze the storage utilization patterns during runtime of the application.  You could realize, for example, that you are not utilizing all the storage bandwidth or IOPS provided, and you might consider downsizing storage.  Alternatively, you could see that your workload needs more storage throughput than suggested; in which case, you might choose to change the capacity, IOPS, or throughput to optimize the configuration.  {cloud} offers different storage types to allow you to find and select the right storage to support your SAP workload and meet your capacity, latency, throughput, IOPS, and cost needs.
+You should still analyze the storage utilization patterns during runtime of the application. You could realize, for example, that you are not utilizing all the storage bandwidth or IOPS provided, and you might consider downsizing storage. Alternatively, you could see that your workload needs more storage throughput than suggested; in which case, you might choose to change the capacity, IOPS, or throughput to optimize the configuration. {cloud} offers different storage types to allow you to find and select the right storage to support your SAP workload and meet your capacity, latency, throughput, IOPS, and cost needs.
 
 === SALT
 
@@ -129,7 +129,7 @@ Salt formulas can be applied in two ways:
 
 Salt Master with Salt Minion:: All steps are initiated on the Salt master, a central management system, which sends instructions to Salt minions, running on managed systems, to perform the required configuration actions.
 
-Salt Minion Only:: All steps defined in Salt formulas are executed on the individual systems by standalone Salt minions.  This is the approach used by the SUSE Automation framework as it removes the need for a central master system.
+Salt Minion Only:: All steps defined in Salt formulas are executed on the individual systems by standalone Salt minions. This is the approach used by the SUSE Automation framework as it removes the need for a central master system.
 
 
 ==== Overview of the available formulas which are used within the SUSE Automation framework.
@@ -190,10 +190,9 @@ ifeval::[ "{cloud}" == "GCP" ]
  * GCE fencing and SAP resource agents
  * Adjustments for the {gcloud} Infrastructure
  * Handle Netweaver, HANA, and DRBD
-// Ab: does gce use drbd?
 endif::[]
 
-The formula provides the capability to create and configure a multi-node HA cluster.  Here are some of the features:
+The formula provides the capability to create and configure a multi-node HA cluster. Here are some of the features:
 
 * Initialize a cluster
 * Join a node to an existing cluster
@@ -205,9 +204,6 @@ The formula provides the capability to create and configure a multi-node HA clus
 * Configure the resource agents
 * Install and configure the monitoring _ha_cluster_exporter_
 
-// SM: Q: this should be cloud specific;
-// PS: A: we describe the formulas here - and there dependent services
-//        second, the concept of sbd can be used at any cloud e.g. in azure we have more than one option, e.g. sbd+iscsi, sbd+rawdisk, agent
 Depending on the fencing requirements it may need an iSCSI server to provide a raw shared disk for the fencing with SBD, where we use the iscsi-formula from SaltStack.
 
 ====== Other dependent services
@@ -226,7 +222,7 @@ The iscsi-formula from SaltStack is able to deploy iSNS, iSCSI initiator, and iS
 SUSE continually works to improve user experience. One of the developments is how to provide a modern solution to monitor the several High Availability clusters that manage SAP HANA and SAP Netweaver. The Monitoring components use the Prometheus toolkit and the Grafana project to visualize the data. In order to be able to monitor the clusters on either HANA or Netweaver, SUSE has written Prometheus exporters which ship as part of SLES for SAP.
 
 ==== SAP HANA Database Exporter
-The exporter provides metrics from more than one database or tenant.  Specifically, it provides:
+The exporter provides metrics from more than one database or tenant. Specifically, it provides:
 
  * Memory metrics
  * CPU metrics
@@ -236,7 +232,7 @@ The exporter provides metrics from more than one database or tenant.  Specifical
  * Top queries consuming time and memory
 
 ==== High Availability Cluster Exporter
-Enables monitoring of Pacemaker, Corosync, SBD, DRBD, and other components of High Availability clusters. This gives administrators the ability to easily monitor cluster status and health.  The following capabilities are included: 
+Enables monitoring of Pacemaker, Corosync, SBD, DRBD, and other components of High Availability clusters. This gives administrators the ability to easily monitor cluster status and health. The following capabilities are included:
 
  * Pacemaker cluster summary, nodes, and resource status
  * Corosync ring errors and quorum votes (currently, only Corosync version 2 is supported)

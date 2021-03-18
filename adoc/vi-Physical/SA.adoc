@@ -59,7 +59,7 @@ ifeval::[ "{cloud}" == "GCP" ]
 . Create a Service Account Key and save it in the machine that will be used to initiate the environment
 . Install _terraform_ (v12) (it comes with SLES within the public cloud module)
 . Download the SAP HANA install media from SAP
-. Create a Google Cloud Storage Bucket 
+. Create a Google Cloud Storage Bucket
 //. Copy or write down the name of the Google Cloud Storage Bucket
 . Copy the SAP HANA install media to a folder in the created Google Cloud Storage Bucket
 . Extract the HANA install media (optional)
@@ -70,7 +70,6 @@ Libvirt - NFS share
 endif::[]
 
 SUSE recommends to use the following directory structure:
-//fixme check directory structure
 
 ----
 version
@@ -130,7 +129,7 @@ The directories with the names of the _cloud provider_ (aws, azure, gcp, libvirt
 
 The _doc_ directory has some brief but important documents for certain parts of the solution.
 
-The directory _generic_modules_ provides modules which are used by all cloud vendor templates.  That includes common variables, locally executed functions within the building block, dependent actions on destroy, and the functions to start the SALT execution on the module building blocks.
+The directory _generic_modules_ provides modules which are used by all cloud vendor templates. That includes common variables, locally executed functions within the building block, dependent actions on destroy, and the functions to start the SALT execution on the module building blocks.
 
 The other directories _pillar_, _pillar_examples_, and _salt_ contain part of the Salt configuration management.
 
@@ -164,7 +163,7 @@ The _modules_ directory:: provides more subdirectories which are the nested chil
 
 The _output.tf_ file:: provides the values returned from the modules; i.e., to be used or displayed.
 
-_terraform.tfvars_:: is a variable definitions file which will gets automatically consumed.  This is used instead of providing values manually. It is the main configuration file and should be the only Terraform file which requires modification.
+_terraform.tfvars_:: is a variable definitions file which will gets automatically consumed. This is used instead of providing values manually. It is the main configuration file and should be the only Terraform file which requires modification.
 
 _terraform.tfvars.example_:: is an example configuration file with many pre-filled values to set up the solution. *It can be used as a starting point for your own file.*
 
@@ -201,11 +200,11 @@ ifeval::[ "{cloud}" == "AWS" ]
 . Click on _{proj_aws_ver}_
 endif::[]
 +
-What is new and what has changed can be seen from this page.  If older versions of the project are used, be sure to carefully review and understand the differences.
+What is new and what has changed can be seen from this page. If older versions of the project are used, be sure to carefully review and understand the differences.
 +
 The _Usage_ section provides you with a link to an OpenBuildServer (OBS) repository where the RPM packages of the building blocks discussed above are stored. Each project version has a unique repository.
 +
-The value/link to the repository will need to be included within the Terraform variables (teraform.tfvars) file. So copy the line as described.
+The value/link to the repository will need to be included within the Terraform variables (terraform.tfvars) file. So copy the line as described.
 
 . Next, go to _Assets_ and download the _Source code_ as .zip or .tar.gz
 . Extract it into a folder on the local computer or the machine that will be used to create your environment
@@ -218,7 +217,7 @@ ifeval::[ "{cloud}" == "Azure" ]
 
 . Change the region in which to deploy the solution, change _az_region = "westeurope"_ to the Azure region required.
 
-. To make it easier to start, change all 4 image types to pay-as-you-go (PAYG).  To do so, replace all _offer_ settings with "sles-sap-15-sp2" and _sku_ with gen2.
+. To make it easier to start, change all 4 image types to pay-as-you-go (PAYG). To do so, replace all _offer_ settings with "sles-sap-15-sp2" and _sku_ with gen2.
 +
 Do this for hana, iscsi, monitoring, drbd.
 +
@@ -246,7 +245,7 @@ Change the region in which to deploy the solution.
 aws_region = "eu-central-1"
 ----
 
-To make it easier to start, change the images types for the SAP instances to pay-as-you-go (PAYG).  In order to do this, set the hana os image and owner accordingly.  The instances sizes/types can should also be set depending on your requirements.
+To make it easier to start, change the images types for the SAP instances to pay-as-you-go (PAYG). In order to do this, set the hana os image and owner accordingly. The instances sizes/types can should also be set depending on your requirements.
 
 ----
 # Instance type to use for the hana cluster nodes
@@ -315,7 +314,7 @@ Change the two location variables and point them to your files.
 
 ifeval::[ "{cloud}" == "Azure" ]
 
-. As the SAP Install Media is needed for the automatic deployment of HANA, an Azure storage account needs to be created.  The SAP HANA media will need to be copied to this storage location. If the SAP media is already extracted this will save time during the deployment.
+. As the SAP Install Media is needed for the automatic deployment of HANA, an Azure storage account needs to be created. The SAP HANA media will need to be copied to this storage location. If the SAP media is already extracted this will save time during the deployment.
 +
 Next, provide the name, key, and path to this storage account, change:
 
@@ -379,7 +378,7 @@ This setting provides credentials to Terraform in order to deploy infrastructure
 aws_credentials = "~/.aws/credentials"
 ----
 
-Modify the following to point to the SAP Media that was uploaded to the S3 Bucket earlier.  The credentials provided above require permissions to read from this S3 bucket.
+Modify the following to point to the SAP Media that was uploaded to the S3 Bucket earlier. The credentials provided above require permissions to read from this S3 bucket.
 
 ----
 hana_inst_master = "s3://mysapmedia/SAPHANA"
@@ -474,7 +473,7 @@ endif::[]
 
 We are nearly done, so take a moment to save your changes before proceeding.
 
-. Go one directory up, change to the _pillar_example_ directory, and then change to the _automatic_ directory.  Here you can see 3 additional subdirectories. They provide the configuration variables for the relevant services. This _automatic_ folder will work for all cloud providers we support today, which is why it is more complex.
+. Go one directory up, change to the _pillar_example_ directory, and then change to the _automatic_ directory. Here you can see 3 additional subdirectories. They provide the configuration variables for the relevant services. This _automatic_ folder will work for all cloud providers we support today, which is why it is more complex.
 
 . For a simple deployment, which uses only HANA, please switch to the _hana_ directory and open the file _hana_sls_.
 
@@ -620,7 +619,7 @@ Within GCP, the Availability Zones (AZ) of a VPC get used for the HA scenario. T
 | DRBD ips | `drbd_ips` | `10.0.0.20`, `10.0.0.21` |
 | DRBD cluster vip | `drbd_cluster_vip` | `10.0.1.22` |
 | Netweaver ips | `netweaver_ips` | `10.0.0.30`, `10.0.0.31`, `10.0.0.32`, `10.0.0.33` | Addresses for the ASCS, ERS, PAS and AAS. The sequence will continue if there are more AAS machines
-| Netweaver virtual ips | `netweaver_virtual_ips` | `10.0.1.34`, `10.0.1.35`, `10.0.1.36`, `10.0.1.37` | 
+| Netweaver virtual ips | `netweaver_virtual_ips` | `10.0.1.34`, `10.0.1.35`, `10.0.1.36`, `10.0.1.37` |
 |==========================
 endif::[]
 
@@ -756,7 +755,7 @@ writeaccelerator:: Azure Write Accelerator is a functionality that is available 
 
 Number of Disks:: The number of disks which get used, depend on the performance requirements. We join disks to a stripe set to provide more performance. At a minimum we need 4 to 5 disks.
 
-LogicalVolumes::  We are using LVM to build stripe sets across several Azure premium disks. These stripe sizes differ between /hana/data and /hana/log. The recommendations are:
+LogicalVolumes:: We are using LVM to build stripe sets across several Azure premium disks. These stripe sizes differ between /hana/data and /hana/log. The recommendations are:
 +
 * 256 KB for /hana/data
 * 64 KB for /hana/log
@@ -1061,7 +1060,7 @@ base:
 
 To run an initial deployment without specific customization, use pillar files stored in the _MAIN/pillar_example/automatic_ folder, as these files are customized with parameters coming from Terraform execution. The pillar files stored there are able to deploy a basic functional set of clusters in all of the available cloud providers.
 
-To adapt the deployment to your scenario, provide your own pillar data files.  There are some basic examples within the directory _MAIN/pillar_example_.
+To adapt the deployment to your scenario, provide your own pillar data files. There are some basic examples within the directory _MAIN/pillar_example_.
 As the pillar files provide data for the Salt formulas, all of the possible pillar options can be found in each formula project.
 
 // fixme - which versions are in sles4sap?
@@ -1081,7 +1080,7 @@ SaltStack GPG renderer provides a secure encryption/decryption of pillar data. T
 
 . https://docs.saltstack.com/en/latest/ref/renderers/all/salt.renderers.gpg.html[SaltStack GPG RENDERERS]
 
-*Encryption is not included in this automation solution.  You are strongly advised to take appropriate security precautions.*
+*Encryption is not included in this automation solution. You are strongly advised to take appropriate security precautions.*
 ====
 
 
@@ -1374,7 +1373,7 @@ salt '*' state.apply hana_node.sls
 
 With the help of the pillar data, the state file, and the formula, Salt will create all needed configuration on the node, will install HANA and, if enabled, will install hana systemreplication and set up the pacemaker cluster, correctly for {cloud}.
 
-The _templates_ directory provides the needed files for cluster rules, the needed hook for HANA, and the monitoring exporter.  All the values come from the best practices guides SUSE created with the Cloud provider {cloud} for the HA scenario.
+The _templates_ directory provides the needed files for cluster rules, the needed hook for HANA, and the monitoring exporter. All the values come from the best practices guides SUSE created with the Cloud provider {cloud} for the HA scenario.
 
 
 ===== Netweaver formula
@@ -1506,14 +1505,14 @@ The use of possible fencing method depends on the cloud provider's features. As 
 endif::[]
 
 ifeval::[ "{cloud}" == "AWS" ]
- 
+
 ===== NFS service
 
-In order to use NFS, AWS EFS Service is recommended.  No additional SUSE infrastructure needs to be deployed.
+In order to use NFS, AWS EFS Service is recommended. No additional SUSE infrastructure needs to be deployed.
 
 ==== Fencing service
 
-Fencing in the cluster will be provided by the EC2 Fencing capability.  This mechanism uses the AWS API framework to fence nodes as required.  The additional IAM and AWS requirements are setup as part of the automation workflow.  No additional SUSE Infrastructure needs to be deployed.
+Fencing in the cluster will be provided by the EC2 Fencing capability. This mechanism uses the AWS API framework to fence nodes as required. The additional IAM and AWS requirements are setup as part of the automation workflow. No additional SUSE Infrastructure needs to be deployed.
 
 endif::[]
 
@@ -1531,7 +1530,7 @@ https://documentation.suse.com/sle-ha/15-SP2/single-html/SLE-HA-nfs-quick/#art-s
 
 ==== Fencing service
 
-Fencing in the cluster will be provided by the GCE Fencing capability.  This mechanism uses the GCP API framework to fence nodes as required. No additional SUSE Infrastructure needs to be deployed.
+Fencing in the cluster will be provided by the GCE Fencing capability. This mechanism uses the GCP API framework to fence nodes as required. No additional SUSE Infrastructure needs to be deployed.
 
 endif::[]
 
