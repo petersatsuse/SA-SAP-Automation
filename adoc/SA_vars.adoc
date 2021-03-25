@@ -24,9 +24,9 @@ endif::[]
 
 
 // could be "Azure","AWS","GCE" or "libvirt"
-:cloud: Azure
+//:cloud: Azure
 //:cloud: AWS
-//:cloud: GCP
+:cloud: GCP
 
 // Variables used within the text
 
@@ -35,7 +35,7 @@ endif::[]
 :gcloud: Google Cloud
 :proj_ver: 6.0.3
 :proj_aws_ver: 6.0.3
-:proj_gcp_ver: 6.0.3 
+:proj_gcp_ver: 6.0.3
 
 
 

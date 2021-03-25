@@ -42,6 +42,7 @@ When deploying on AWS, an S3 Bucket is required to store the SAP media. Using th
 
 TIP: The example shows a bucket called _mysapmedia_, but a unique name should be used.
 
+//FIXME - the picture and example does not fit to our defaults mentioned later on
 image::s3_bucket.png[scalewidth=80%]
 
 endif::[]
@@ -53,9 +54,10 @@ When deploying on GCP, a Storage Bucket is required to store the SAP Media. Usin
 * Create two folders (for the SAP HANA and SAP NetWeaver media) within the bucket.
 * Upload the SAP Media to the folder within the storage bucket.
 
-image::gcp_storage_bucket.png[scalewidth=80%]
-
 TIP: The example shows a bucket called _sap-automation-media_, but a unique name should be used.
+
+//FIXME - the picture and example does not fit to our defaults mentioned later on
+image::gcp_storage_bucket.png[scalewidth=80%]
 
 NOTE: For more information about how to create a {gcloud} Storage Bucket, refer to https://cloud.google.com/storage/docs/creating-buckets
 

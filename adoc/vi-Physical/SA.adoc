@@ -69,7 +69,7 @@ ifeval::[ "{cloud}" == "Libvirt" ]
 Libvirt - NFS share
 endif::[]
 
-SUSE recommends to use the following directory structure:
+SUSE recommends to use the following directory structure for the SAP Media:
 
 ----
 version
@@ -239,14 +239,14 @@ endif::[]
 
 ifeval::[ "{cloud}" == "AWS" ]
 
-Change the region in which to deploy the solution.
-
+. Change the region in which to deploy the solution.
++
 ----
 aws_region = "eu-central-1"
 ----
 
-To make it easier to start, change the images types for the SAP instances to pay-as-you-go (PAYG). In order to do this, set the hana os image and owner accordingly. The instances sizes/types can should also be set depending on your requirements.
-
+. To make it easier to start, change the images types for the SAP instances to pay-as-you-go (PAYG). In order to do this, set the hana os image and owner accordingly. The instances sizes/types can should also be set depending on your requirements.
++
 ----
 # Instance type to use for the hana cluster nodes
 hana_instancetype = "r3.8xlarge"
@@ -255,19 +255,16 @@ hana_os_image = "suse-sles-sap-15-sp2"
 hana_os_owner = "679593333241"
 ----
 
-To automatically deploy PAYG instances from the AWS Marketplace, be sure to 'Subscribe' to the offering.
-
+. To automatically deploy PAYG instances from the AWS Marketplace, be sure to 'Subscribe' to the offering.
++
 A link for SLES for SAP 15 SP2 can be found here.
 https://aws.amazon.com/marketplace/server/procurement?productId=e9701ac9-43ee-4dda-b944-17c6c231c8db
-
++
 If a different version of SLES for SAP is required, subscribe to the relevant version on the marketplace.
 
 endif::[]
-+
-ifeval::[ "{cloud}" == "GCP" ]
 
-.GCP SAP HANA Basic Infrastructure Configurations:
-========
+ifeval::[ "{cloud}" == "GCP" ]
 . Change the GCP Project ID to your one:
 +
 ----
@@ -298,7 +295,7 @@ machine_type = "n1-highmem-32"
 # SAP HANA sles4sap image
 sles4sap_boot_image = "suse-sap-cloud/sles-15-sp2-sap-v20201208"
 ----
-========
+
 endif::[]
 
 ifeval::[ "{cloud}" == "Libvirt" ]
@@ -371,23 +368,23 @@ by removing the _#_.
 endif::[]
 
 ifeval::[ "{cloud}" == "AWS" ]
-
++
 This setting provides credentials to Terraform in order to deploy infrastructure on the AWS cloud.
-
++
 ----
 aws_credentials = "~/.aws/credentials"
 ----
 
-Modify the following to point to the SAP Media that was uploaded to the S3 Bucket earlier. The credentials provided above require permissions to read from this S3 bucket.
-
+. Modify the following to point to the SAP Media that was uploaded to the S3 Bucket earlier. The credentials provided above require permissions to read from this S3 bucket.
++
 ----
 hana_inst_master = "s3://mysapmedia/SAPHANA"
 
 hana_archive_file = "51052481_part1.exe"
 ----
 
-To keep the cluster architecture simple and to provide additional packages needed to deploy, set the following.
-
+. To keep the cluster architecture simple and to provide additional packages needed to deploy, set the following.
++
 ----
 hana_cluster_sbd_enabled = false
 
@@ -396,8 +393,8 @@ ha_sap_deployment_repo = "https://download.opensuse.org/repositories/network:ha-
 pre_deployment = true
 ----
 
-Finally, ensure the following lines are commented *out* using a #:
-
+. Finally, ensure the following lines are commented *out* using a #:
++
 ----
 # hana_disk_device = "/dev/xvdd"
 # aws_access_key_id = my-access-key-id
@@ -505,9 +502,8 @@ If all goes well, after ~40 minutes (depending on the speed of the instances) yo
 ifeval::[ "{cloud}" == "Azure" ]
 As a jumphost with a public ip address is created as part of the deployment, it is possible to log in to any virtual machine as part of the deployment from your machine with
 
-[subs="attributes,quotes"]
 ----
-  ssh -J adminuser@jumphost adminuser@targethost
+ ssh -J adminuser@_<public_ip_jumphost>_ adminuser@<private_ip_targethost>_
 ----
 endif::[]
 
@@ -515,16 +511,15 @@ ifeval::[ "{cloud}" == "AWS" ]
 The instances are currently provisioned with a public IP address as part of the deployment, you can ssh to them directly using the ec2-user.
 
 ----
-    ssh ec2-user@public_ip_of_hana_node
+ ssh ec2-user@_<PUBLIC IP ADDRESS OF THE HANA NODE>_
 ----
 endif::[]
 
 ifeval::[ "{cloud}" == "GCP" ]
 The instances are currently provisioned with a public IP address as part of the deployment, you can ssh to them directly using the _root_ user.
 
-[subs="specialchars,attributes,quotes"]
 ----
-$ ssh root@_<PUBLIC IP ADDRESS OF THE HANA NODE>_
+ ssh root@_<PUBLIC IP ADDRESS OF THE HANA NODE>_
 ----
 endif::[]
 
@@ -572,35 +567,33 @@ ifeval::[ "{cloud}" == "Azure" ]
 | Monitoring   | monitoring_srv_ip  | 10.74.0.5  | if monitoring is enabled
 | HANA IP's    | hana_ips           | 10.74.0.10, 10.74.0.11 | second only used in HA
 | Hana cluster virtual IP | hana_cluster_vip | 10.74.0.12 | Only used if HA is enabled in HANA
-| Hana cluster virtual IP secondary | hana_cluster_vip_secondary | 10.74.0.13 | Only used if the Active/Active HA setup is enabled
+| Hana cluster virtual IP secondary | hana_cluster_vip_ secondary | 10.74.0.13 | Only used if the Active/Active HA setup is enabled
 | DRBD IP's    | drbd_ips | 10.74.0.20, 10.74.0.21 | needed if HA NFS service for NW is used
 | DRBD cluster vIP | drbd_cluster_vip | 10.74.0.22 |needed if HA NFS service for NW is used
 | Netweaver IP's | netweaver_ips | 10.74.0.30, 10.74.0.31, 10.74.0.32, 10.74.0.33 | Addresses for the ASCS, ERS, PAS and AAS. The sequence will continue if there are more AAS machines
-| Netweaver virtual IP's | netweaver_virtual_ips | 10.74.0.34, 10.74.0.35, 10.74.0.36, 192.168.135.37 | The 1st virtual address will be the next in the sequence of the regular Netweaver addresses
+| Netweaver virtual IP's | netweaver_virtual _ips | 10.74.0.34, 10.74.0.35, 10.74.0.36, 192.168.135.37 | The 1st virtual address will be the next in the sequence of the regular Netweaver addresses
 |==========================
 
 endif::[]
 
 ifeval::[ "{cloud}" == "AWS" ]
-AWS
 
 Within AWS, the Availability Zones (AZ) of a VPC get used for the HA scenario.
 Each of the AZs has its own network and, therefore, each of the machines in a cluster is in a different subnet. The floating virtual IP address is created with help of a special resource agent, which changes the routing table entry of a virtual router for VPC so the adress is outside of the VPC and AZs
 
-Example based on `10.0.0.0/16` address range (VPC address range) and `192.168.1.0/24` as `virtual_address_range` (the default value).
-
-[with="80%",options="header"]
+.Example based on `10.0.0.0/16` address range (VPC address range) and `192.168.1.0/24` as `virtual_address_range` (the default value).
+[with="70%",options="header"]
 |==========================
 | Name | Substituted variable | Addresses | Comments
 | Iscsi server | `iscsi_srv_ip` | `10.0.0.4` |
 | Monitoring | `monitoring_srv_ip` | `10.0.0.5` |
 | Hana ips | `hana_ips` | `10.0.1.10`, `10.0.2.11` |
 | Hana cluster vip | `hana_cluster_vip` | `192.168.1.10` | Only used if HA is enabled in HANA
-| Hana cluster vip secondary | `hana_cluster_vip_secondary` | `192.168.1.11` | Only used if the Active/Active setup is used
+| Hana cluster vip secondary | `hana_cluster_ vip_secondary` | `192.168.1.11` | Only used if the Active/Active setup is used
 | DRBD ips | `drbd_ips` | `10.0.5.20`, `10.0.6.21` |
 | DRBD cluster vip | `drbd_cluster_vip` | `192.168.1.20` |
 | Netweaver ips | `netweaver_ips` | `10.0.3.30`, `10.0.4.31`, `10.0.3.32`, `10.0.4.33` | Addresses for the ASCS, ERS, PAS and AAS. The sequence will continue if there are more AAS machines
-| Netweaver virtual ips | `netweaver_virtual_ips` | `192.168.1.30`, `192.168.1.31`, `192.168.1.32`, `192.168.1.33` | The last number of the address will match with the regular address
+| Netweaver virtual ips | `netweaver_virtual _ips` | `192.168.1.30`, `192.168.1.31`, `192.168.1.32`, `192.168.1.33` | The last number of the address will match with the regular address
 |==========================
 endif::[]
 
@@ -609,25 +602,23 @@ ifeval::[ "{cloud}" == "GCP" ]
 Within GCP, the Availability Zones (AZ) of a VPC get used for the HA scenario. The Cluster subnet can be stretched over multiple AZs within the same region. The floating virtual IP address is created with help of a special resource agent _gcp-vpc-move-ip_, which changes the routing table entry of a virtual router for VPC so the floating IP address is outside of the VPC and AZs.
 
 .Autogenerated addresses example based on '10.0.0.0/24' VPC Subnet address range and '10.74.0.0/24' subnet as `virtual_address_range` (the default value)
-[with="80%",options="header"]
+[with="70%",options="header"]
 |==========================
 | Name | Substituted variable | Addresses | Comments
 | Monitoring | `monitoring_srv_ip` | `10.0.0.5` |
 | Hana ips | `hana_ips` | `10.0.0.10`, `10.0.0.11` |
 | Hana cluster vip | `hana_cluster_vip` | `10.0.1.12` | Only used if HA is enabled in HANA
-| Hana cluster vip secondary | `hana_cluster_vip_secondary` | `10.0.1.13` | Only used if the Active/Active setup is used
+| Hana cluster vip secondary | `hana_cluster_vip_ secondary` | `10.0.1.13` | Only used if the Active/Active setup is used
 | DRBD ips | `drbd_ips` | `10.0.0.20`, `10.0.0.21` |
 | DRBD cluster vip | `drbd_cluster_vip` | `10.0.1.22` |
 | Netweaver ips | `netweaver_ips` | `10.0.0.30`, `10.0.0.31`, `10.0.0.32`, `10.0.0.33` | Addresses for the ASCS, ERS, PAS and AAS. The sequence will continue if there are more AAS machines
-| Netweaver virtual ips | `netweaver_virtual_ips` | `10.0.1.34`, `10.0.1.35`, `10.0.1.36`, `10.0.1.37` |
+| Netweaver virtual ips | `netweaver_virtual_ ips` | `10.0.1.34`, `10.0.1.35`, `10.0.1.36`, `10.0.1.37` |
 |==========================
 endif::[]
 
 ifeval::[ "{cloud}" == "Libvirt" ]
-Libvirt
 
-Example based on `192.168.135.0/24` address range.
-
+.Example based on `192.168.135.0/24` address range.
 [with="70%",options="header"]
 |==========================
 | Name | Substituted variable | Addresses | Comments
@@ -635,11 +626,11 @@ Example based on `192.168.135.0/24` address range.
 | Monitoring | `monitoring_srv_ip` | `192.168.135.5` |
 | Hana ips | `hana_ips` | `192.168.135.10`, `192.168.135.11` |
 | Hana cluster vip | `hana_cluster_vip` | `192.168.135.12` | Only used if HA is enabled in HANA
-| Hana cluster vip secondary | `hana_cluster_vip_secondary` | `192.168.135.13` | Only used if the Active/Active setup is used
+| Hana cluster vip secondary | `hana_cluster_vip_ secondary` | `192.168.135.13` | Only used if the Active/Active setup is used
 | DRBD ips | `drbd_ips` | `192.168.135.20`, `192.168.135.21` |
 | DRBD cluster vip | `drbd_cluster_vip` | `192.168.135.22` |
 | Netweaver ips | `netweaver_ips` | `192.168.135.30`, `192.168.135.31`, `192.168.135.32`, `192.168.135.33` | Addresses for the ASCS, ERS, PAS and AAS. The sequence will continue if there are more AAS machines
-| Netweaver virtual ips | `netweaver_virtual_ips` | `192.168.135.34`, `192.168.135.35`, `192.168.135.36`, `192.168.135.37` | The 1st virtual address will be the next in the sequence of the regular Netweaver addresses
+| Netweaver virtual ips | `netweaver_virtual_ ips` | `192.168.135.34`, `192.168.135.35`, `192.168.135.36`, `192.168.135.37` | The 1st virtual address will be the next in the sequence of the regular Netweaver addresses
 |==========================
 endif::[]
 
@@ -654,9 +645,9 @@ If specifying the IP addresses manually, make sure these are valid IP addresses.
 
 The _output.tf_ file is a way to expose some of the internal attributes. These act like the return values of a Terraform module to the user. It will return the IP address and node names created from the automation.
 
-The values defined in the _variables.tf_ file are used to avoid hard-coding parameters, and it provides all required Terraform input variables and their default values within the solution instead of having them in the main.tf file.
+The values defined in the _variables.tf_ file are used to avoid hard-coding parameters, and it provides all required Terraform input variables and their default values within the solution instead of having them in the _main.tf_ file.
 
-As there are many variable values to input, these need to be defined in a variable definition file named _terraform.tfvars_. Terraform will automatically load the variable values from the variable definition file if it is named terraform.tfvars.
+As there are many variable values to input, these need to be defined in a variable definition file named _terraform.tfvars_. Terraform will automatically load the variable values from the variable definition file if it is named _terraform.tfvars_.
 
 The _modules_ directory provides all the needed resources to create the respective building block
 ----
@@ -953,8 +944,7 @@ Finally, the Terraform _remote-exec provisioner_ is used to call the script, _pr
 
 ==== Our Architecture for the Salt building blocks
 
-//fixme - image our salt module arch.
-image::shap_deployment_small.png[role="right",scaledwidth="40%"]
+image::shap_deployment_small.png[role="right",scaledwidth="60%"]
 
 shaptools:: low level python wrapper (API) around SAP utilities and commands
 
@@ -963,8 +953,6 @@ Execution module:: provides the methods in the lower layer (shaptools) to Salt
 State:: combination of execution modules and other parts with logic to define a specific configuration
 
 Formula:: group of states that give a context for building blocks; e.g., HANA
-
-
 
 The provisioning workflow of the SAP building blocks consist of different steps:
 
@@ -1307,15 +1295,16 @@ One of the most common uses of Jinja is to insert conditional statements into Sa
 . The formula package is installed through the HANA Node state files
 
 . To install it manually please use zypper, as this will include the other dependent packages such as salt-shaptools and habootstrap-formula
-
++
 ----
  zypper install saphanabootstrap-formula
 ----
 
+
 The Salt formula will need input data through a pillar file which is part of the main project file (in MAIN/pillar/... or on the node /srv/pillar )
 If using the formula standalone, the data needs to be provided manually. There are more options available as shown in the example file.
 
-*Example HANA pillar*
+Example HANA pillar
 [subs="attributes,quotes"]
 ----
 hana:
