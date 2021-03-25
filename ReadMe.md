@@ -1,6 +1,6 @@
 
 # Purpose
-An example template of files for a comprehensive solution architecture in a documentation-as-code approach.
+It documents the Solution Architecture of the SUSE HA Terrafrom templates.
 
 # Assumption(s)
 - Most of the text-based content is in AsciiDoc ( https://github.com/asciidoc/asciidoc ) format
